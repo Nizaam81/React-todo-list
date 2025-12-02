@@ -8,7 +8,8 @@ function App() {
 
   const addTask = () => {
     if (newTask.trim() === "") return;
-    setTasks([...tasks, newTask]);
+
+    setTasks([...tasks, { text: newTask, completed: false }]);
     setNewTask("");
   };
 
@@ -16,9 +17,20 @@ function App() {
     setTasks(tasks.filter((_, i) => i !== index));
   };
 
+  const toggleTask = (index) => {
+    const updated = [...tasks];
+    
+    
+    updated[index].completed = !updated[index].completed;
+ 
+    setTasks(updated);
+  };
+
   return (
     <div className="app-container">
+    
       <h1> To-Do List</h1>
+
       <div className="input-container">
         <input
           type="text"
@@ -29,7 +41,7 @@ function App() {
         <button onClick={addTask}>Add</button>
       </div>
 
-      <TodoList tasks={tasks} deleteTask={deleteTask} />
+      <TodoList tasks={tasks} deleteTask={deleteTask} toggleTask={toggleTask} />
     </div>
   );
 }
