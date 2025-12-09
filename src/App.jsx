@@ -1,13 +1,20 @@
 import { useState } from "react";
 import TodoList from "./components/TodoList";
 import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
   const addTask = () => {
-    if (newTask.trim() === "") return;
+	  if (newTask.trim() === "")
+	 return	toast.error("Task is required!"); 
+ 
+	  if (tasks.some(task => task.text.toLowerCase() === newTask.toLowerCase())) {
+  return toast.error("Duplicate tasks are not allowed!");
+}
 
     setTasks([...tasks, { text: newTask, completed: false }]);
     setNewTask("");
@@ -28,7 +35,7 @@ function App() {
 
   return (
     <div className="app-container">
-    
+     <ToastContainer />
       <h1> To-Do List</h1>
 
       <div className="input-container">
